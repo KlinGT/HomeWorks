@@ -16,29 +16,49 @@ while (begin)
     switch (system)
     {
         case 1:
-            /*                                              ///Ветка task_1.
-            Задача 10: Напишите программу, которая принимает на вход трёхзначное число 
-            и на выходе показывает вторую цифру этого числа. 
-            456 -> 5
-            782 -> 8
-            918 -> 1
-            */
-            Console.Clear();
+            /*                                              ///Ветка task_01.
+            Задача 25: Напишите цикл, который принимает на вход два числа (A и B) 
+            и возводит число A в натуральную степень B.
+            3, 5 -> 243 (3⁵)
+            2, 4 -> 16
+            */            
+            Console.Clear();  
+            Console.WriteLine("ПРОГРАММА 1 ЗАПУЩЕНА\n");
 
-            Console.WriteLine("ПРОГРАММА 1 ЗАПУЩЕНА.");
-            Console.WriteLine("Введите трёхзначное число:");
-            int three = Convert.ToInt32(Console.ReadLine());
-
-            int CutMyNum(int number)                     //метод вывода 2го знака трёхзначного числа.
+            //метод требует ввести число, до тех пор пока не введут цифры:
+            int GetNumberFool(string message)   
             {
-                string numAsString = three.ToString();
-                int result = int.Parse(numAsString[1].ToString());
+                int result = 0;                 
+                bool isCorrect = false;         
+
+                while(!isCorrect)                   
+                {
+                    Console.Write(message);     
+                    isCorrect = int.TryParse(Console.ReadLine(), out result);
+
+                    if(!isCorrect)
+                        Console.WriteLine("Введены не цифры, введите корректное число!");
+                }
                 return result;
             }
 
-            int SecondNumber = CutMyNum(three);
-            Console.WriteLine($"{three} -> {SecondNumber}");
-            Console.WriteLine("Программа 1 завершена.");
+            int numA = GetNumberFool("Введите число A: ");
+            int numB = GetNumberFool("Введите число B: ");
+
+            //метод перемножения А, в В кол-во раз:
+            int Multiplication(int numA, int numB)
+            {
+                int result = 1;
+                for (int i = 1; i <= numB; i++)
+                {
+                    result *= numA; 
+                }
+                return result;
+            }
+
+            int res = Multiplication(numA, numB);
+            Console.WriteLine($"Результат: {numA}, {numB} -> {res}\n");
+            Console.WriteLine("ПРОГРАММА 1 ЗАВЕРШЕНА\n");
             break;
 
         case 2:
