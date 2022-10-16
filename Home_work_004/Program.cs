@@ -62,30 +62,53 @@ while (begin)
             break;
 
         case 2:
-            /*                                              ///Ветка task_2.
-            Задача 13: Напишите программу, которая выводит третью цифру заданного числа 
-            или сообщает, что третьей цифры нет. 
-            645 -> 5
-            78 -> третьей цифры нет
-            32679 -> 6
-            */
-            Console.Clear();
+            /*                                              ///Ветка task_02.
+            Задача 27: Напишите программу, которая принимает на вход число 
+            и выдаёт сумму цифр в числе.
+            452 -> 11
+            82 -> 10
+            9012 -> 12
+            */            
+            Console.Clear();  
+            Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА\n");
 
-            Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА.");
-            Console.WriteLine("Введите, желательно, трёхзначное число:");
-            string num = Console.ReadLine();
+            //метод требует ввести число, до тех пор пока не введут цифры:
+            int GetNumberFool2(string message)   
+            {
+                int result = 0;                 
+                bool isCorrect = false;         
 
-            string CutMyNumber(string number)                     //метод вывода 3го знака трёхзначного числа
-            {                                                     //или ответ об его отсутствии.
-                if (num.Length > 2) 
-                    Console.WriteLine($"{num} -> {num[2]}");
-                else 
-                    Console.WriteLine($"{num} -> третьей цифры нет");
-                return num;
+                while(!isCorrect)                   
+                {
+                    Console.Write(message);     
+                    isCorrect = int.TryParse(Console.ReadLine(), out result);
+
+                    if(!isCorrect)
+                        Console.WriteLine("Введены не цифры, введите корректное число!");
+                }
+                return result;
+            } 
+
+            //метод складывания цифр числа:
+            int Folding(int numBer)
+            {
+                int count = Convert.ToString(numBer).Length;
+                int result = 0;
+                int temp = 0;
+
+                for (int i = 0; i < count; i++)
+                {
+                    temp = numBer - numBer % 10;
+                    result = result + (numBer - temp);
+                    numBer /= 10; 
+                }
+                return result;
             }
 
-            CutMyNumber(num);
-            Console.WriteLine("Программа 2 завершена.");
+            int numBer = GetNumberFool2("Введите же Ваше число: ");
+            int sumOfDigit = Folding(numBer);
+            Console.WriteLine($"Результат: {numBer} -> {sumOfDigit}\n");
+            Console.WriteLine("ПРОГРАММА 2 ЗАВЕРШЕНА\n");
             break;
 
         case 3:
