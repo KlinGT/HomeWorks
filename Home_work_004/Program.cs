@@ -7,9 +7,9 @@ while (begin)
 {
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
-    Console.WriteLine("1 - Программа, принимает на вход трёхзначное число и на выходе показывает вторую цифру этого числа.");
-    Console.WriteLine("2 - Программа, выводит третью цифру заданного числа или сообщает, что третьей цифры нет.");
-    Console.WriteLine("3 - Программа, принимает на вход цифру, обозначающую день недели, и проверяет, является ли этот день выходным.");
+    Console.WriteLine("1 - Программа, принимает на вход два числа (A и B) и возводит число A в натуральную степень B.");
+    Console.WriteLine("2 - Программа, принимает на вход число и выдаёт сумму цифр в числе.");
+    Console.WriteLine("3 - Программа, задаёт массив из 8 элементов и выводит их на экран. Ввод элеменетов через консоль, через запятую (использовать метод string.Split())");
     Console.WriteLine("4 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
 
@@ -112,30 +112,53 @@ while (begin)
             break;
 
         case 3:
-            /*                                              ///Ветка task_3.
-            Задача 15: Напишите программу, которая принимает на вход цифру, 
-            обозначающую день недели, и проверяет, является ли этот день выходным. 
-            6 -> да
-            7 -> да
-            1 -> нет
-            */
-            Console.Clear();
+            /*                                              ///Ветка task_03.
+            Задача 29: Напишите программу, которая задаёт массив из 8 элементов 
+            и выводит их на экран.
+            1, 2, 5, 7, 19 -> [1, 2, 5, 7, 19]
+            6, 1, 33 -> [6, 1, 33]
+            Ввод элеменетов через консоль (через запятую. использовать метод string.Split()).
+            */          
+            Console.Clear();  
+            Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
 
-            Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА");
-            Console.WriteLine("Введите день недели числом:");
-            int numDay = Convert.ToInt32(Console.ReadLine());
-
-            int Weekends (int days)                             //метод задающий диапазон дней.
+            //метод ввода значений массива:
+            string[] GetStrArray()
             {
-                if (numDay < 6 || numDay > 7)
-                    Console.WriteLine($"{numDay} -> нет");
-                else
-                    Console.WriteLine($"{numDay} -> да");
-                return numDay;
+                Console.WriteLine("Введите значения массива через запятую: ");
+                string str = Console.ReadLine();
+                string [] strArray = str.Split(' ', ',');
+                return strArray;
             }
 
-            Weekends(numDay);
-            Console.WriteLine("Программа завершена.");
+            //метод из string в int:
+            int [] GetNumArray(string [] strArray)
+            {
+                int [] numArray = new int[strArray.Length];
+                for (int i = 0; i < strArray.Length; i++)
+                {
+                    numArray[i] = int.Parse(strArray[i]);
+                }
+                return numArray;
+            }
+
+            //метод вывода в консоль, int массива с запятыми:
+            void GetArrayOut(int [] numArray) 
+            {
+                for (int i = 0; i < numArray.Length; i++)
+                {
+                    if(i < numArray.Length -1)
+                        Console.Write($"{numArray[i]}, ");
+                    else
+                        Console.WriteLine($"{numArray[i]}");
+                }
+                Console.WriteLine();
+            }
+
+            string [] strArray = GetStrArray();
+            int [] numArray = GetNumArray(strArray);
+            GetArrayOut(numArray);
+            Console.WriteLine("ПРОГРАММА 3 ЗАВЕРШЕНА\n");
             break;
 
         default:
