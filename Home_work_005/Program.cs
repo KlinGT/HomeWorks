@@ -8,7 +8,7 @@ while (begin)
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
     Console.WriteLine("1 - Программа, задаёт массив заполненный случайными, положительными, трёхзначными числами и покажет количество чётных чисел в массиве.");
-    Console.WriteLine("2 - Программа, принимает на вход число и выдаёт сумму цифр в числе.");
+    Console.WriteLine("2 - Программа, задаёт одномерный массив, заполненный случайными числами и находит сумму элементов, стоящих на нечётных позициях.");
     Console.WriteLine("3 - Программа, задаёт массив из 8 элементов и выводит их на экран. Ввод элеменетов через консоль, через запятую (использовать метод string.Split())");
     Console.WriteLine("4 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
@@ -76,51 +76,59 @@ while (begin)
 
         case 2:
             /*                                              ///Ветка task_02.
-            Задача 27: Напишите программу, которая принимает на вход число 
-            и выдаёт сумму цифр в числе.
-            452 -> 11
-            82 -> 10
-            9012 -> 12
+            Задача 36: Задайте одномерный массив, заполненный случайными числами. 
+            Найдите сумму элементов, стоящих на нечётных позициях.
+            [3, 7, 23, 12] -> 19
+            [-4, -6, 89, 6] -> 0
             */            
             Console.Clear();  
             Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА\n");
 
-            //метод требует ввести число, до тех пор пока не введут цифры:
-            int GetNumberFool2(string message)   
+            //создаём массив с size кол-вом эл-ов:
+            int [] NewArray(int size)
             {
-                int result = 0;                 
-                bool isCorrect = false;         
+                int [] result = new int[size];
+                Random rnd = new Random();
 
-                while(!isCorrect)                   
-                {
-                    Console.Write(message);     
-                    isCorrect = int.TryParse(Console.ReadLine(), out result);
-
-                    if(!isCorrect)
-                        Console.WriteLine("Введены не цифры, введите корректное число!");
-                }
-                return result;
-            } 
-
-            //метод складывания цифр числа:
-            int Folding(int numBer)
-            {
-                int count = Convert.ToString(numBer).Length;
-                int result = 0;
-                int temp = 0;
-
-                for (int i = 0; i < count; i++)
-                {
-                    temp = numBer - numBer % 10;
-                    result = result + (numBer - temp);
-                    numBer /= 10; 
-                }
+                for (int i = 0; i < result.Length; i++)
+                    result[i] = rnd.Next(0, 99);
                 return result;
             }
 
-            int numBer = GetNumberFool2("Введите же Ваше число: ");
-            int sumOfDigit = Folding(numBer);
-            Console.WriteLine($"Результат: {numBer} -> {sumOfDigit}\n");
+            //умоляем пользователя огласить кол-во size эл-ов массива:
+            int GetSomeNum(string msg)
+            {
+                Console.Write(msg);
+                int result = int.Parse(Console.ReadLine());
+                return result;
+            }
+
+            //делим индексы и складываем значения нечётных индексов массива:
+            int DividingValues2(int [] array)
+            {
+                int count = 0;
+
+                for (int i = 0; i < array.Length; i++)
+                    if(i % 2 != 0)
+                        count = count + array[i];
+                return count;
+            }
+
+            //выводим массив и результат складывания значений нечётных индексов:
+            void PrintResult2(int [] array, int num)
+            {
+                for (int i = 0; i < array.Length; i++)
+                    if(i < array.Length -1)
+                        Console.Write($"{array[i]}, ");
+                    else
+                        Console.WriteLine($"{array[i]} -> {num}\n");
+            }
+
+            int size = GetSomeNum("Введите кол-во эл-от массива цифрой: ");
+            int [] arr = NewArray(size);
+            int result = DividingValues2(arr);
+            PrintResult2(arr, result);
+
             Console.WriteLine("ПРОГРАММА 2 ЗАВЕРШЕНА\n");
             break;
 
