@@ -9,7 +9,7 @@ while (begin)
     Console.WriteLine("Введите номер интересующей вас программы:");
     Console.WriteLine("1 - Программа, задаёт массив заполненный случайными, положительными, трёхзначными числами и покажет количество чётных чисел в массиве.");
     Console.WriteLine("2 - Программа, задаёт одномерный массив, заполненный случайными числами и находит сумму элементов, стоящих на нечётных позициях.");
-    Console.WriteLine("3 - Программа, задаёт массив из 8 элементов и выводит их на экран. Ввод элеменетов через консоль, через запятую (использовать метод string.Split())");
+    Console.WriteLine("3 - Программа, задаёт массив вещественных чисел и находит разницу между максимальным и минимальным элементов массива.");
     Console.WriteLine("4 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
 
@@ -134,51 +134,67 @@ while (begin)
 
         case 3:
             /*                                              ///Ветка task_03.
-            Задача 29: Напишите программу, которая задаёт массив из 8 элементов 
-            и выводит их на экран.
-            1, 2, 5, 7, 19 -> [1, 2, 5, 7, 19]
-            6, 1, 33 -> [6, 1, 33]
-            Ввод элеменетов через консоль (через запятую. использовать метод string.Split()).
-            */          
+            Задача 38: Задайте массив вещественных чисел. 
+            Найдите разницу между максимальным и минимальным элементов массива.
+            [3 7 22 2 78] -> 76
+            */            
             Console.Clear();  
             Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
 
-            //метод ввода значений массива:
-            string[] GetStrArray()
+            //создаём рандомный массив с length кол-вом эл-ов:
+            double [] ElseArray(int length)
             {
-                Console.WriteLine("Введите значения массива через запятую: ");
-                string str = Console.ReadLine();
-                string [] strArray = str.Split(' ', ',');
-                return strArray;
+                double [] result = new double[length];
+                Random rnd = new Random();
+
+                for (int i = 0; i < result.Length; i++)
+                        result[i] = rnd.NextDouble() *20;
+                return result;
             }
 
-            //метод из string в int:
-            int [] GetNumArray(string [] strArray)
+            //находим и возвращаем Макс и Мин эл-ты массива:
+            (double, double) FindMaxMin(double [] array)
             {
-                int [] numArray = new int[strArray.Length];
-                for (int i = 0; i < strArray.Length; i++)
-                {
-                    numArray[i] = int.Parse(strArray[i]);
-                }
-                return numArray;
-            }
+                double max = 0;
+                double min = 0;
 
-            //метод вывода в консоль, int массива с запятыми:
-            void GetArrayOut(int [] numArray) 
-            {
-                for (int i = 0; i < numArray.Length; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    if(i < numArray.Length -1)
-                        Console.Write($"{numArray[i]}, ");
+                    if(array[i] > max)
+                        max = array[i];
                     else
-                        Console.WriteLine($"{numArray[i]}");
+                        min = array[i];
                 }
-                Console.WriteLine();
+                return (max, min);
             }
 
-            string [] strArray = GetStrArray();
-            int [] numArray = GetNumArray(strArray);
-            GetArrayOut(numArray);
+            //запрос на ввод кол-ва эл-ов массива:
+            int GiveMeSomeNum(string msg)
+            {
+                Console.Write(msg);
+                int result = int.Parse(Console.ReadLine());
+                return result;
+            }
+
+            //вывод массива и результат разницы эл-ов:
+            void PrintAll(double [] array, double max, double min)
+            {
+                Console.Write("[ ");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if(i < array.Length -1)
+                        Console.Write($"{array[i]} ");
+                    else
+                        Console.WriteLine($"{array[i]} ] -> {max - min}\n");
+                }
+            }
+
+            int length = GiveMeSomeNum("Введите задуманное кол-во эл-ов массива цифрой: ");
+            double [] arr2 = ElseArray(length);
+            (double max, double min) = FindMaxMin(arr2);
+            PrintAll(arr2, max, min);
+
+            Console.WriteLine($"Проверка: max = {max} и min = {min}\n");
             Console.WriteLine("ПРОГРАММА 3 ЗАВЕРШЕНА\n");
             break;
 
