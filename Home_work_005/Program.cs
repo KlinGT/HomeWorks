@@ -7,7 +7,7 @@ while (begin)
 {
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
-    Console.WriteLine("1 - Программа, принимает на вход два числа (A и B) и возводит число A в натуральную степень B.");
+    Console.WriteLine("1 - Программа, задаёт массив заполненный случайными, положительными, трёхзначными числами и покажет количество чётных чисел в массиве.");
     Console.WriteLine("2 - Программа, принимает на вход число и выдаёт сумму цифр в числе.");
     Console.WriteLine("3 - Программа, задаёт массив из 8 элементов и выводит их на экран. Ввод элеменетов через консоль, через запятую (использовать метод string.Split())");
     Console.WriteLine("4 - Если хотите покинуть программу.");
@@ -17,47 +17,60 @@ while (begin)
     {
         case 1:
             /*                                              ///Ветка task_01.
-            Задача 25: Напишите цикл, который принимает на вход два числа (A и B) 
-            и возводит число A в натуральную степень B.
-            3, 5 -> 243 (3⁵)
-            2, 4 -> 16
+            Задача 34: Задайте массив заполненный случайными положительными трёхзначными числами. 
+            Напишите программу, которая покажет количество чётных чисел в массиве.
+            [345, 897, 568, 234] -> 2
             */            
             Console.Clear();  
             Console.WriteLine("ПРОГРАММА 1 ЗАПУЩЕНА\n");
 
-            //метод требует ввести число, до тех пор пока не введут цифры:
-            int GetNumberFool(string message)   
+            //создаём рандомный массив с some кол-вом эл-ов:
+            int [] InitRndArray(int some)
             {
-                int result = 0;                 
-                bool isCorrect = false;         
+                int [] result = new int[some];
+                Random rnd = new Random();
 
-                while(!isCorrect)                   
-                {
-                    Console.Write(message);     
-                    isCorrect = int.TryParse(Console.ReadLine(), out result);
-
-                    if(!isCorrect)
-                        Console.WriteLine("Введены не цифры, введите корректное число!");
-                }
+                for (int i = 0; i < result.Length; i++)
+                    result[i] = rnd.Next(99, 999);
                 return result;
             }
 
-            int numA = GetNumberFool("Введите число A: ");
-            int numB = GetNumberFool("Введите число B: ");
-
-            //метод перемножения А, в В кол-во раз:
-            int Multiplication(int numA, int numB)
+            //делим значения массива на 2, с целью посчитать кол-во чётных эл-ов:
+            int DividingValues(int [] array)
             {
-                int result = 1;
-                for (int i = 1; i <= numB; i++)
-                {
-                    result *= numA; 
-                }
+                int count = 0;
+
+                for (int i = 0; i < array.Length; i++)
+                    if(array[i] % 2 == 0)
+                        count++;
+                return count;
+            }
+
+            //просим пользователя задать кол-во эл-ов массива:
+            int GetSomeQuantity(string msg)
+            {
+                Console.Write(msg);
+                int result = int.Parse(Console.ReadLine());
                 return result;
             }
 
-            int res = Multiplication(numA, numB);
-            Console.WriteLine($"Результат: {numA}, {numB} -> {res}\n");
+            //вывод значений массива и результата подсчётов:
+            void PrintResult(int [] array, int res)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (i < array.Length -1)
+                        Console.Write($"{array[i]} ");
+                    else
+                        Console.WriteLine($"{array[i]} -> {res}\n");
+                }
+            }
+
+            int some = GetSomeQuantity("Введите кол-во эл-ов массива: ");
+            int [] array = InitRndArray(some);
+            int res = DividingValues(array);
+            PrintResult(array, res);
+
             Console.WriteLine("ПРОГРАММА 1 ЗАВЕРШЕНА\n");
             break;
 
