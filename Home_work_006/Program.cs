@@ -1,4 +1,4 @@
-﻿// Домашняя работа по 3ой лекции; Расторгуева ВТ; группа 3235; ///Ветка Main.
+﻿// Домашняя работа по 4ой лекции; Расторгуева ВТ; группа 3235; ///Ветка Main.
 
 int system;
 bool begin = true;
@@ -8,7 +8,7 @@ while (begin)
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
     Console.WriteLine("1 - Программа, считает кол-во положительных значений из введённых пользователем.");
-    Console.WriteLine("2 - Программа, .");
+    Console.WriteLine("2 - Программа, найдёт точку пересечения двух прямых, заданных уравнениями y = k1 * x + b1, y = k2 * x + b2.");
     Console.WriteLine("3 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
 
@@ -78,58 +78,46 @@ while (begin)
 
         case 2:
             /*                                              ///Ветка task_02.
-            Задача 36: Задайте одномерный массив, заполненный случайными числами. 
-            Найдите сумму элементов, стоящих на нечётных позициях.
-            [3, 7, 23, 12] -> 19
-            [-4, -6, 89, 6] -> 0
+            Задача 43: Напишите программу, которая найдёт точку пересечения двух прямых, 
+            заданных уравнениями y = k1 * x + b1, y = k2 * x + b2; 
+            значения b1, k1, b2 и k2 задаются пользователем.
+            b1 = 2, k1 = 5, b2 = 4, k2 = 9 -> (-0,5; -0,5)
             */
             Console.Clear();
             Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА\n");
 
-            //создаём массив с size кол-вом эл-ов:
-            int[] NewArray(int size)
+            // запрос на ввод значений:
+            double EnterinValues(string msg)  
             {
-                int[] result = new int[size];
-                Random rnd = new Random();
+                int result = 0;                 
+                bool isCorrect = false;         
 
-                for (int i = 0; i < result.Length; i++)
-                    result[i] = rnd.Next(0, 99);
+                while(!isCorrect)                   
+                {
+                    Console.Write(msg);     
+                    isCorrect = int.TryParse(Console.ReadLine(), out result);
+
+                    if(!isCorrect)
+                        Console.WriteLine("Введено не корректное значение, введите значение цифрой!");
+                }
                 return result;
             }
 
-            //умоляем пользователя огласить кол-во size эл-ов массива:
-            int GetSomeNum(string msg)
+            // первый х, второй у, далее по формуле:
+            (double, double) UsingTheFormula(double b1, double k1, double b2, double k2)
             {
-                Console.Write(msg);
-                int result = int.Parse(Console.ReadLine());
-                return result;
+                double x = (-b2 + b1)/(-k1 + k2);
+                double y = k2 * x + b2;
+                return (x, y);
             }
 
-            //делим индексы и складываем значения нечётных индексов массива:
-            int DividingValues2(int[] array)
-            {
-                int count = 0;
+            var b1 = EnterinValues("Введите значение b1: ");
+            var k1 = EnterinValues("Введите значение k1: ");
+            var b2 = EnterinValues("Введите значение b2: ");
+            var k2 = EnterinValues("Введите значение k2: ");
 
-                for (int i = 0; i < array.Length; i++)
-                    if (i % 2 != 0)
-                        count = count + array[i];
-                return count;
-            }
-
-            //выводим массив и результат складывания значений нечётных индексов:
-            void PrintResult2(int[] array, int num)
-            {
-                for (int i = 0; i < array.Length; i++)
-                    if (i < array.Length - 1)
-                        Console.Write($"{array[i]}, ");
-                    else
-                        Console.WriteLine($"{array[i]} -> {num}\n");
-            }
-
-            int size = GetSomeNum("Введите кол-во эл-от массива цифрой: ");
-            int[] arr = NewArray(size);
-            int result = DividingValues2(arr);
-            PrintResult2(arr, result);
+            (var x, var y) = UsingTheFormula(b1, k1, b2, k2);
+            Console.WriteLine($"b1 = {b1}, k1 = {k1}, b2 = {b2}, k2 = {k2} -> ({x}; {y})\n");
 
             Console.WriteLine("ПРОГРАММА 2 ЗАВЕРШЕНА\n");
             break;
