@@ -7,7 +7,7 @@ while (begin)
 {
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
-    Console.WriteLine("1 - Программа, считает кол-во положительных значений из введённых пользователем.");
+    Console.WriteLine("1 - Программа, создаёт двумерный массив размером m х n, заполненный случайными вещественными числами.");
     Console.WriteLine("2 - Программа, найдёт точку пересечения двух прямых, заданных уравнениями y = k1 * x + b1, y = k2 * x + b2.");
     Console.WriteLine("3 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
@@ -15,64 +15,61 @@ while (begin)
     switch (system)
     {
         case 1:
-            /*                                              ///Ветка task_01.
-            Задача 41: Пользователь вводит с клавиатуры M чисел. 
-            Посчитайте, сколько чисел больше 0 ввёл пользователь.
-            0, 7, 8, -2, -2 -> 2
-            1, -7, 567, 89, 223 -> 4
+            /*                                              ///Ветка task_1.
+            Задача 47. Задайте двумерный массив размером m×n, 
+            заполненный случайными вещественными числами.
+            m = 3, n = 4.
+            0,5 7 -2 -0,2
+            1 -3,3 8 -9,9
+            8 7,8 -7,1 9
             */
             Console.Clear();
             Console.WriteLine("ПРОГРАММА 1 ЗАПУЩЕНА\n");
 
-            // запрос на ввод чисел через пробел, ввывод в массив без (' ', ','):
-            string[] AcceptValuesInArray(string msg)
+            // запрос размерности массива:
+            int EnterDimensionOfArray(string message)
             {
-                Console.WriteLine(msg);
-                string str = Console.ReadLine();
-                string[] strArray = str.Split(' ', ',');
-                return strArray;
+                Console.Write(message);
+                int result = int.Parse(Console.ReadLine() ?? "");
+                return result;
             }
 
-            // из массива string в массив int:
-            int[] ConvertingFromStrToNums(string[] strArray)
+            // создаём двумерный массив с случайными значениями вечественных чисел:
+            double[,] TwoDimensionalArrayWithRandomValues(int m, int n)
             {
-                int[] numArray = new int[strArray.Length];
-                for (int i = 0; i < strArray.Length; i++)
-                {
-                    numArray[i] = int.Parse(strArray[i]);
-                }
-                return numArray;
-            }
+                double[,] array = new double[m, n];
+                Random rnd = new Random();
 
-            // сколько чисел больше 0 ввёл пользователь:
-            int CheckingForPositiveNums(int[] array)
-            {
-                int count = 0;
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < m; i++)
                 {
-                    if (array[i] > 0) count++;
+                    for (int j = 0; j < n; j++)
+                    {
+                        array[i, j] = rnd.NextDouble() * 10;
+                    }
                 }
-                return count;
+                return array;
             }
 
             // вывод значений массива в консоль:
-            void PrintArray(int[] array, int num)
+            void OutputArrayValuesToConsole(double[,] array)
             {
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.GetLength(0); i++)
                 {
-                    if (i < array.Length - 1)
-                        Console.Write($"{array[i]}, ");
-                    else
-                        Console.Write($"{array[i]} -> {num}");
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        Console.Write("{0,6:F1}", array[i, j]);
+                    }
+                    Console.WriteLine(" ");
                 }
-                Console.WriteLine("\n");
             }
 
-            string[] someStr = AcceptValuesInArray("Введите отрицательные и положительные цифры через пробел:");
-            int[] numArray = ConvertingFromStrToNums(someStr);
-            int positiv = CheckingForPositiveNums(numArray);
-            PrintArray(numArray, positiv);
+            int m = EnterDimensionOfArray("Введите значение m: ");
+            int n = EnterDimensionOfArray("Введите значение n: ");
+            Console.WriteLine(" ");
+            double[,] array = TwoDimensionalArrayWithRandomValues(m, n);
 
+            OutputArrayValuesToConsole(array);
+            Console.WriteLine(" ");
             Console.WriteLine("ПРОГРАММА 1 ЗАВЕРШЕНА\n");
             break;
 
