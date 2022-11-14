@@ -274,6 +274,182 @@ while (begin)
             Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
             break;
 
+        case 4:
+            /*                                              ///Ветка Task_4.
+            Задача 58: Задайте две матрицы. Напишите программу, 
+            которая будет находить произведение двух матриц.
+            Например, даны 2 матрицы:
+            2 4 | 3 4
+            3 2 | 3 3
+            Результирующая матрица будет:
+            18 20
+            15 18
+            */
+            Console.Clear();
+            Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
+
+            // запрашиваем размерность матриц:
+            int RequestingDimensionOfMatrices(string msg)
+            {
+                Console.Write(msg);
+                int result = Convert.ToInt32(Console.ReadLine());
+                return result;
+            }
+
+            // наполнение матрицы рандомными значениями:
+            int[,] FillArrayRandomNumbers(int[,] matrix)
+            {
+                Random rnd = new Random();
+
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        matrix[i, j] = rnd.Next(1, 10);
+                    }
+                }
+                return matrix;
+            }
+
+            // вывод матрицы в консоль:
+            void PrintMatrixInToConsole(int[,] matrix)
+            {
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        Console.Write("{0, 4}", matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            // находим произведение двух матриц:
+            int[,] ProductOfTwoMatrices(int size, int[,] matrixA, int[,] matrixB, int[,] matrixC)
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        for (int k = 0; k < size; k++)
+                        {
+                            matrixC[i, j] = matrixC[i, j] + (matrixA[i, k] * matrixB[k, j]);
+                        }
+                    }
+                }
+                return matrixC;
+            }
+
+            int size = RequestingDimensionOfMatrices("Введите размерность матриц: ");
+            int[,] matrixA = new int[size, size];
+            int[,] matrixB = new int[size, size];
+            int[,] matrixC = new int[size, size];
+
+            FillArrayRandomNumbers(matrixA);
+            FillArrayRandomNumbers(matrixB);
+
+            Console.WriteLine("Первая матрица:");
+            PrintMatrixInToConsole(matrixA);
+            Console.WriteLine();
+            Console.WriteLine("Вторая матрица:");
+            PrintMatrixInToConsole(matrixB);
+            Console.WriteLine();
+
+            int[,] result = ProductOfTwoMatrices(size, matrixA, matrixB, matrixC);
+            Console.WriteLine("Результат произведения двух матриц:");
+            PrintMatrixInToConsole(result);
+
+            Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
+            break;
+
+        case 5:
+            /*                                              ///Ветка Task_5.
+            Задача 58: Задайте две матрицы. Напишите программу, 
+            которая будет находить произведение двух матриц.
+            Например, даны 2 матрицы:
+            2 4 | 3 4
+            3 2 | 3 3
+            Результирующая матрица будет:
+            18 20
+            15 18
+            */
+            Console.Clear();
+            Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
+
+            // запрашиваем размерность матриц:
+            int RequestingDimensionOfMatrices(string msg)
+            {
+                Console.Write(msg);
+                int result = Convert.ToInt32(Console.ReadLine());
+                return result;
+            }
+
+            // наполнение матрицы рандомными значениями:
+            int[,] FillArrayRandomNumbers(int[,] matrix)
+            {
+                Random rnd = new Random();
+
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        matrix[i, j] = rnd.Next(1, 10);
+                    }
+                }
+                return matrix;
+            }
+
+            // вывод матрицы в консоль:
+            void PrintMatrixInToConsole(int[,] matrix)
+            {
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        Console.Write("{0, 4}", matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            // находим произведение двух матриц:
+            int[,] ProductOfTwoMatrices(int size, int[,] matrixA, int[,] matrixB, int[,] matrixC)
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        for (int k = 0; k < size; k++)
+                        {
+                            matrixC[i, j] = matrixC[i, j] + (matrixA[i, k] * matrixB[k, j]);
+                        }
+                    }
+                }
+                return matrixC;
+            }
+
+            int size = RequestingDimensionOfMatrices("Введите размерность матриц: ");
+            int[,] matrixA = new int[size, size];
+            int[,] matrixB = new int[size, size];
+            int[,] matrixC = new int[size, size];
+
+            FillArrayRandomNumbers(matrixA);
+            FillArrayRandomNumbers(matrixB);
+
+            Console.WriteLine("Первая матрица:");
+            PrintMatrixInToConsole(matrixA);
+            Console.WriteLine();
+            Console.WriteLine("Вторая матрица:");
+            PrintMatrixInToConsole(matrixB);
+            Console.WriteLine();
+
+            int[,] result = ProductOfTwoMatrices(size, matrixA, matrixB, matrixC);
+            Console.WriteLine("Результат произведения двух матриц:");
+            PrintMatrixInToConsole(result);
+
+            Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
+            break;
+
         default:
             begin = false;
             break;
