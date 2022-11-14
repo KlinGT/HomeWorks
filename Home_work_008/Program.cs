@@ -9,7 +9,7 @@ while (begin)
     Console.WriteLine("Введите номер интересующей вас программы:");
     Console.WriteLine("1 - Программа, создаёт двумерный массив и упорядочит по убыванию элементы каждой строки двумерного массива.");
     Console.WriteLine("2 - Программа, задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
-    Console.WriteLine("3 - Программа, задаёт двумерный массив из целых чисел и находит среднее арифметическое элементов в каждом столбце.");
+    Console.WriteLine("3 - Программа, задаёт две матрицы и находит произведение двух матриц.");
     Console.WriteLine("4 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
 
@@ -187,81 +187,91 @@ while (begin)
             break;
 
         case 3:
-            /*                                              ///Ветка task_3.
-            Задача 52. Задайте двумерный массив из целых чисел. 
-            Найдите среднее арифметическое элементов в каждом столбце.
-            Например, задан массив:
-            1 4 7 2
-            5 9 2 3
-            8 4 2 4
-            Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
+            /*                                              ///Ветка Task_3.
+            Задача 58: Задайте две матрицы. Напишите программу, 
+            которая будет находить произведение двух матриц.
+            Например, даны 2 матрицы:
+            2 4 | 3 4
+            3 2 | 3 3
+            Результирующая матрица будет:
+            18 20
+            15 18
             */
             Console.Clear();
             Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
 
-            // запрашиваем у пользователя размерность массива:
-            int AskUserForDimensionOfArray(string msg)
+            // запрашиваем размерность матриц:
+            int RequestingDimensionOfMatrices(string msg)
             {
                 Console.Write(msg);
                 int result = Convert.ToInt32(Console.ReadLine());
                 return result;
             }
 
-            // создаём двумерный массив рандомных значений:
-            int[,] CreatingTwoDimensionalArrayOfRandomValues(int rows, int columns)
+            // наполнение матрицы рандомными значениями:
+            int[,] FillArrayRandomNumbers(int[,] matrix)
             {
-                int[,] array = new int[rows, columns];
                 Random rnd = new Random();
 
-                for (int i = 0; i < array.GetLength(0); i++)
+                for (int i = 0; i < matrix.GetLength(0); i++)
                 {
-                    for (int j = 0; j < array.GetLength(1); j++)
+                    for (int j = 0; j < matrix.GetLength(1); j++)
                     {
-                        array[i, j] = rnd.Next(1, 10);
+                        matrix[i, j] = rnd.Next(1, 10);
                     }
                 }
-                return array;
+                return matrix;
             }
 
-            // вывод рандомного массива в терминал:
-            void OutputOfRandomArrayToTerminal(int[,] array)
+            // вывод матрицы в консоль:
+            void PrintMatrixInToConsole(int[,] matrix)
             {
-                Console.WriteLine(" ");
-                for (int i = 0; i < array.GetLength(0); i++)
+                for (int i = 0; i < matrix.GetLength(0); i++)
                 {
-                    for (int j = 0; j < array.GetLength(1); j++)
+                    for (int j = 0; j < matrix.GetLength(1); j++)
                     {
-                        Console.Write("{0,4}", array[i, j]);
+                        Console.Write("{0, 4}", matrix[i, j]);
                     }
-                    Console.WriteLine(" ");
+                    Console.WriteLine();
                 }
-                Console.WriteLine(" ");
             }
 
-            // среднее арифметическое элементов по столбцам:
-            void ArithmeticMeanOfElementsByColumns(int[,] arr)
+            // находим произведение двух матриц:
+            int[,] ProductOfTwoMatrices(int size, int[,] matrixA, int[,] matrixB, int[,] matrixC)
             {
-                Console.WriteLine("Среднее арифметическое \nкаждого столбца:\n");
-                for (int i = 0; i < arr.GetLength(0); i++)
+                for (int i = 0; i < size; i++)
                 {
-                    double summ = 0;
-                    for (int j = 0; j < arr.GetLength(1); j++)
+                    for (int j = 0; j < size; j++)
                     {
-                        summ += arr[i, j];
+                        for (int k = 0; k < size; k++)
+                        {
+                            matrixC[i, j] = matrixC[i, j] + (matrixA[i, k] * matrixB[k, j]);
+                        }
                     }
-                    Console.Write($" {summ / arr.GetLength(0)} ");
                 }
-                Console.WriteLine("\n");
+                return matrixC;
             }
 
-            int rows = AskUserForDimensionOfArray("Введите кол-во строк: ");
-            int columns = AskUserForDimensionOfArray("Введите кол-во столбцов: ");
+            int size = RequestingDimensionOfMatrices("Введите размерность матриц: ");
+            int[,] matrixA = new int[size, size];
+            int[,] matrixB = new int[size, size];
+            int[,] matrixC = new int[size, size];
 
-            int[,] arr2 = CreatingTwoDimensionalArrayOfRandomValues(rows, columns);
-            OutputOfRandomArrayToTerminal(arr2);
-            ArithmeticMeanOfElementsByColumns(arr2);
+            FillArrayRandomNumbers(matrixA);
+            FillArrayRandomNumbers(matrixB);
 
-            Console.WriteLine("ПРОГРАММА 3 ЗАВЕРШЕНА\n");
+            Console.WriteLine("Первая матрица:");
+            PrintMatrixInToConsole(matrixA);
+            Console.WriteLine();
+            Console.WriteLine("Вторая матрица:");
+            PrintMatrixInToConsole(matrixB);
+            Console.WriteLine();
+
+            int[,] result = ProductOfTwoMatrices(size, matrixA, matrixB, matrixC);
+            Console.WriteLine("Результат произведения двух матриц:");
+            PrintMatrixInToConsole(result);
+
+            Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
             break;
 
         default:
