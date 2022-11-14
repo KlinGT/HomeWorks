@@ -11,7 +11,7 @@ while (begin)
     Console.WriteLine("2 - Программа задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
     Console.WriteLine("3 - Программа задаёт две матрицы и находит произведение двух матриц.");
     Console.WriteLine("4 - Программа cформирует трёхмерный массив из неповторяющихся двузначных чисел и построчно выведит его, добавляя индексы каждого элемента.");
-    Console.WriteLine("5 - Программа,.");
+    Console.WriteLine("5 - Программа заполнит массив спирально.");
     Console.WriteLine("6 - Если хотите покинуть программу.");
     
     system = Convert.ToInt32(Console.ReadLine());
@@ -375,90 +375,68 @@ while (begin)
 
         case 5:
             /*                                              ///Ветка Task_5.
-            Задача 58: Задайте две матрицы. Напишите программу, 
-            которая будет находить произведение двух матриц.
-            Например, даны 2 матрицы:
-            2 4 | 3 4
-            3 2 | 3 3
-            Результирующая матрица будет:
-            18 20
-            15 18
+            Задача 62. Напишите программу, которая заполнит спирально массив 4 на 4.
+            Например, на выходе получается вот такой массив:
+            01 02 03 04
+            12 13 14 05
+            11 16 15 06
+            10 09 08 07
             */
             Console.Clear();
-            Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
+            Console.WriteLine("ПРОГРАММА 5 ЗАПУЩЕНА\n");
 
-            // запрашиваем размерность матриц:
-            int RequestingDimensionOfMatrices(string msg)
+            // запрашиваем размерность массива:
+            int GetArraySize(string msg)
             {
                 Console.Write(msg);
-                int result = Convert.ToInt32(Console.ReadLine());
-                return result;
+                int size = Convert.ToInt32(Console.ReadLine());
+                return size;
             }
 
-            // наполнение матрицы рандомными значениями:
-            int[,] FillArrayRandomNumbers(int[,] matrix)
+            // создаём спиральный массив:
+            int[,] CreatingSpiralArray(int size)
             {
-                Random rnd = new Random();
+                int[,] array = new int[size, size];
 
-                for (int i = 0; i < matrix.GetLength(0); i++)
+                int num = 1;
+                int i = 0;
+                int j = 0;
+
+                while (num <= size * size)
                 {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
-                    {
-                        matrix[i, j] = rnd.Next(1, 10);
-                    }
+                    array[i, j] = num;
+                    if (i <= j + 1 && i + j < size - 1)
+                        ++j;
+                    else if (i < j && i + j >= size - 1)
+                        ++i;
+                    else if (i >= j && i + j > size - 1)
+                        --j;
+                    else
+                        --i;
+                    ++num;
                 }
-                return matrix;
+                return array;
             }
 
-            // вывод матрицы в консоль:
-            void PrintMatrixInToConsole(int[,] matrix)
+            void PrintSpiralArray(int[,] array)
             {
-                for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int i = 0; i < array.GetLength(0); i++)
                 {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    for (int j = 0; j < array.GetLength(1); j++)
                     {
-                        Console.Write("{0, 4}", matrix[i, j]);
+                        Console.Write("{0, 4}", array[i, j]);
                     }
-                    Console.WriteLine();
+                    Console.WriteLine("");
                 }
             }
 
-            // находим произведение двух матриц:
-            int[,] ProductOfTwoMatrices(int size, int[,] matrixA, int[,] matrixB, int[,] matrixC)
-            {
-                for (int i = 0; i < size; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        for (int k = 0; k < size; k++)
-                        {
-                            matrixC[i, j] = matrixC[i, j] + (matrixA[i, k] * matrixB[k, j]);
-                        }
-                    }
-                }
-                return matrixC;
-            }
+            int sizeX = GetArraySize("Введите размерность массива: ");
+            Console.WriteLine("");
 
-            int size = RequestingDimensionOfMatrices("Введите размерность матриц: ");
-            int[,] matrixA = new int[size, size];
-            int[,] matrixB = new int[size, size];
-            int[,] matrixC = new int[size, size];
+            int[,] arr = CreatingSpiralArray(sizeX);
+            PrintSpiralArray(arr);
 
-            FillArrayRandomNumbers(matrixA);
-            FillArrayRandomNumbers(matrixB);
-
-            Console.WriteLine("Первая матрица:");
-            PrintMatrixInToConsole(matrixA);
-            Console.WriteLine();
-            Console.WriteLine("Вторая матрица:");
-            PrintMatrixInToConsole(matrixB);
-            Console.WriteLine();
-
-            int[,] result = ProductOfTwoMatrices(size, matrixA, matrixB, matrixC);
-            Console.WriteLine("Результат произведения двух матриц:");
-            PrintMatrixInToConsole(result);
-
-            Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
+            Console.WriteLine("\nПРОГРАММА 5 ЗАВЕРШЕНА\n");
             break;
 
         default:
