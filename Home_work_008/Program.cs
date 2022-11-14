@@ -7,10 +7,13 @@ while (begin)
 {
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
-    Console.WriteLine("1 - Программа, создаёт двумерный массив и упорядочит по убыванию элементы каждой строки двумерного массива.");
-    Console.WriteLine("2 - Программа, задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
-    Console.WriteLine("3 - Программа, задаёт две матрицы и находит произведение двух матриц.");
-    Console.WriteLine("4 - Если хотите покинуть программу.");
+    Console.WriteLine("1 - Программа создаёт двумерный массив и упорядочит по убыванию элементы каждой строки двумерного массива.");
+    Console.WriteLine("2 - Программа задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
+    Console.WriteLine("3 - Программа задаёт две матрицы и находит произведение двух матриц.");
+    Console.WriteLine("4 - Программа cформирует трёхмерный массив из неповторяющихся двузначных чисел и построчно выведит его, добавляя индексы каждого элемента.");
+    Console.WriteLine("5 - Программа,.");
+    Console.WriteLine("6 - Если хотите покинуть программу.");
+    
     system = Convert.ToInt32(Console.ReadLine());
 
     switch (system)
@@ -276,90 +279,98 @@ while (begin)
 
         case 4:
             /*                                              ///Ветка Task_4.
-            Задача 58: Задайте две матрицы. Напишите программу, 
-            которая будет находить произведение двух матриц.
-            Например, даны 2 матрицы:
-            2 4 | 3 4
-            3 2 | 3 3
-            Результирующая матрица будет:
-            18 20
-            15 18
+            Задача 60. Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. 
+            Напишите программу, которая будет построчно выводить массив, 
+            добавляя индексы каждого элемента.
+            Массив размером 2 x 2 x 2
+            66(0,0,0) 25(0,1,0)
+            34(1,0,0) 41(1,1,0)
+            27(0,0,1) 90(0,1,1)
+            26(1,0,1) 55(1,1,1)
             */
             Console.Clear();
-            Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
+            Console.WriteLine("ПРОГРАММА 4 ЗАПУЩЕНА\n");
 
-            // запрашиваем размерность матриц:
-            int RequestingDimensionOfMatrices(string msg)
+            // запрашиваем размерность массива:
+            int EnterArraySize(string msg)
             {
                 Console.Write(msg);
-                int result = Convert.ToInt32(Console.ReadLine());
+                int result = int.Parse(Console.ReadLine() ?? "");
                 return result;
             }
 
-            // наполнение матрицы рандомными значениями:
-            int[,] FillArrayRandomNumbers(int[,] matrix)
+            // заполняем массив рандомными числами:
+            void Fill3DArray(int[,,] array)
             {
+                int minNum = 10;
+                int maxNum = 99;
                 Random rnd = new Random();
 
-                for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int i = 0; i < array.GetLength(0); i++)
                 {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    for (int j = 0; j < array.GetLength(1); j++)
                     {
-                        matrix[i, j] = rnd.Next(1, 10);
+                        for (int k = 0; k < array.GetLength(2); k++)
+                        {
+                            while (array[i, j, k] == 0)
+                            {
+                                int number = rnd.Next(minNum, maxNum + 1);
+
+                                if (IsNumberInArray(array, number) == false)
+                                {
+                                    array[i, j, k] = number;
+                                }
+                            }
+                        }
                     }
                 }
-                return matrix;
             }
 
-            // вывод матрицы в консоль:
-            void PrintMatrixInToConsole(int[,] matrix)
+            // проверка на повторяемость:
+            bool IsNumberInArray(int[,,] array, int number)
             {
-                for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int i = 0; i < array.GetLength(0); i++)
                 {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    for (int j = 0; j < array.GetLength(1); j++)
                     {
-                        Console.Write("{0, 4}", matrix[i, j]);
+                        for (int k = 0; k < array.GetLength(2); k++)
+                        {
+                            if (array[i, j, k] == number) return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            // вывод массива в консоль:
+            void Print3DArray(int[,,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        for (int k = 0; k < array.GetLength(2); k++)
+                        {
+                            Console.Write(array[i, j, k]);
+                            Console.Write("({0},{1},{2})\t", i, j, k);
+                        }
+                        Console.WriteLine();
                     }
                     Console.WriteLine();
                 }
             }
 
-            // находим произведение двух матриц:
-            int[,] ProductOfTwoMatrices(int size, int[,] matrixA, int[,] matrixB, int[,] matrixC)
-            {
-                for (int i = 0; i < size; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        for (int k = 0; k < size; k++)
-                        {
-                            matrixC[i, j] = matrixC[i, j] + (matrixA[i, k] * matrixB[k, j]);
-                        }
-                    }
-                }
-                return matrixC;
-            }
+            Console.WriteLine($"Введите размер массива A x B x C: ");
+            int sizeA = EnterArraySize("Введите размерность A: ");
+            int sizeB = EnterArraySize("Введите размерность B: ");
+            int sizeC = EnterArraySize("Введите размерность C: ");
+            Console.WriteLine("");
 
-            int size = RequestingDimensionOfMatrices("Введите размерность матриц: ");
-            int[,] matrixA = new int[size, size];
-            int[,] matrixB = new int[size, size];
-            int[,] matrixC = new int[size, size];
+            int[,,] array = new int[sizeA, sizeB, sizeC];
+            Fill3DArray(array);
+            Print3DArray(array);
 
-            FillArrayRandomNumbers(matrixA);
-            FillArrayRandomNumbers(matrixB);
-
-            Console.WriteLine("Первая матрица:");
-            PrintMatrixInToConsole(matrixA);
-            Console.WriteLine();
-            Console.WriteLine("Вторая матрица:");
-            PrintMatrixInToConsole(matrixB);
-            Console.WriteLine();
-
-            int[,] result = ProductOfTwoMatrices(size, matrixA, matrixB, matrixC);
-            Console.WriteLine("Результат произведения двух матриц:");
-            PrintMatrixInToConsole(result);
-
-            Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
+            Console.WriteLine("\nПРОГРАММА 4 ЗАВЕРШЕНА\n");
             break;
 
         case 5:
