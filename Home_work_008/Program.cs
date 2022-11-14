@@ -8,7 +8,7 @@ while (begin)
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
     Console.WriteLine("1 - Программа, создаёт двумерный массив и упорядочит по убыванию элементы каждой строки двумерного массива.");
-    Console.WriteLine("2 - Программа, принимает индекс элемента в двумерном массиве, и возвращает значение этого элемента или же сообщит, что такого элемента нет.");
+    Console.WriteLine("2 - Программа, задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
     Console.WriteLine("3 - Программа, задаёт двумерный массив из целых чисел и находит среднее арифметическое элементов в каждом столбце.");
     Console.WriteLine("4 - Если хотите покинуть программу.");
     system = Convert.ToInt32(Console.ReadLine());
@@ -105,74 +105,83 @@ while (begin)
             break;
 
         case 2:
-            /*                                              ///Ветка task_02.
-            Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, 
-            и возвращает значение этого элемента или же указание, что такого элемента нет.
+            /*                                              ///Ветка Task_02.
+            Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, 
+            которая будет находить строку с наименьшей суммой элементов.
             Например, задан массив:
             1 4 7 2
             5 9 2 3
             8 4 2 4
-            17 -> такого числа в массиве нет
+            5 2 6 7
+            Программа считает сумму элементов в каждой строке 
+            и выдаёт номер строки с наименьшей суммой элементов: 1 строка
             */
             Console.Clear();
             Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА\n");
 
-            // создаём двумерный массив с фиксированным кол-во эл-ов:
-            int[,] CreatingTwoDimensionalArrayWithFixedNumberOfElements()
+            // задаём прямоугольный двумерный массив:
+            int[,] SettingRectangularTwoDimensionalArray()
             {
-                int[,] array = new int[5, 5];
+                int[,] array = new int[5, 9];
                 Random rnd = new Random();
 
                 for (int i = 0; i < 5; i++)
                 {
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < 9; j++)
                     {
-                        array[i, j] = rnd.Next(1, 20);
+                        array[i, j] = rnd.Next(1, 10);
                     }
                 }
                 return array;
             }
 
             // вывод массива в консоль:
-            void OutputArrayInToConsole(int [,] array)
+            void PrintArray(int[,] array)
             {
                 for (int i = 0; i < array.GetLength(0); i++)
                 {
                     for (int j = 0; j < array.GetLength(1); j++)
                     {
-                        Console.Write("{0,5}", array[i, j]);
+                        Console.Write("{0, 3}", array[i, j]);
                     }
-                    Console.WriteLine(" ");
+                    Console.WriteLine();
                 }
-                Console.WriteLine(" ");
-            }
-
-            // принимаем индексы x и y позиции искомого эл-та массива:
-            int EnterTheIndexesOfTheElement(string msg)
-            {
-                Console.Write(msg);
-                int index = int.Parse(Console.ReadLine() ?? "");
-                return index;
-            }
-
-            // поиск значения по введённому индексу:
-            void SearchForValueByEnteredIndex(int[,] arr, int x, int y)
-            {
-                if (x < 0 | x >= arr.GetLength(0) | y < 0 | y >= arr.GetLength(1))
-                    Console.WriteLine($"Элемент с индексом [{x},{y}] НЕ найден!");
-                else
-                    Console.WriteLine($"Элемент с индексом [{x}, {y}] найден и равен: {arr[x, y]}");
-
                 Console.WriteLine();
             }
 
-            int[,] arr = CreatingTwoDimensionalArrayWithFixedNumberOfElements();
-            OutputArrayInToConsole(arr);
+            // находим строку с наименьшей суммой элементов:
+            int FindRowWithSmallestSumOfElements(int[,] array)
+            {
+                int index = 0;
+                int minSum = 0;
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    int sum = 0;
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        sum += array[i, j];
+                    }
+                    Console.WriteLine($"{i + 1}ая строка = {sum}");
+                    
+                    if (i == 0)
+                    {
+                        minSum = sum;
+                    }
+                    else if (sum < minSum)
+                    {
+                        minSum = sum;
+                        index = i;
+                    }
+                }
+                return index;
+            }
 
-            int x = EnterTheIndexesOfTheElement("Введите первый индекс х: ");
-            int y = EnterTheIndexesOfTheElement("Введите второй индекс y: ");
+            int[,] rectangularArray = SettingRectangularTwoDimensionalArray();
+            Console.WriteLine("Прямоугольный двумерный массив:");
+            PrintArray(rectangularArray);
 
-            SearchForValueByEnteredIndex(arr, x, y);
+            int index = FindRowWithSmallestSumOfElements(rectangularArray);
+            Console.WriteLine($"\n{index + 1}ая строка с минимальной суммой эл-ов. \n");
 
             Console.WriteLine("ПРОГРАММА 2 ЗАВЕРШЕНА\n");
             break;
