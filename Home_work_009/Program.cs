@@ -8,7 +8,7 @@ while (begin)
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
     Console.WriteLine("1 - Программа задаёт значение N и выводит все натуральные числа в промежутке от N до 1.");
-    Console.WriteLine("2 - Программа задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
+    Console.WriteLine("2 - Программа задаёт значения M и N и находит сумму натуральных элементов в промежутке от M до N.");
     Console.WriteLine("3 - Программа задаёт две матрицы и находит произведение двух матриц.");
     Console.WriteLine("4 - Если хотите покинуть программу.");
     
@@ -57,85 +57,47 @@ while (begin)
             break;
 
         case 2:
-            /*                                              ///Ветка Task_02.
-            Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, 
-            которая будет находить строку с наименьшей суммой элементов.
-            Например, задан массив:
-            1 4 7 2
-            5 9 2 3
-            8 4 2 4
-            5 2 6 7
-            Программа считает сумму элементов в каждой строке 
-            и выдаёт номер строки с наименьшей суммой элементов: 1 строка
-            */
+            /*                                              ///Ветка Task_2.
+            Задача 66: Задайте значения M и N. Напишите программу, которая найдёт сумму 
+            натуральных элементов в промежутке от M до N. Выполнить с помощью рекурсии.
+            M = 1; N = 15 -> 120
+            M = 4; N = 8. -> 30
+            */            
             Console.Clear();
             Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА\n");
 
-            // задаём прямоугольный двумерный массив:
-            int[,] SettingRectangularTwoDimensionalArray()
+            // ввод значения M и N с консоли:
+            int EnteringValues(string msg)
             {
-                int[,] array = new int[5, 9];
-                Random rnd = new Random();
+                Console.Write(msg);
 
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 9; j++)
-                    {
-                        array[i, j] = rnd.Next(1, 10);
-                    }
-                }
-                return array;
+                bool isCorrect = false;
+                int result = 0;
+
+                while (!isCorrect)
+                    if (int.TryParse(Console.ReadLine(), out result))
+                        isCorrect = true;
+                    else
+                        Console.WriteLine("Не корректный ввод. Повторите попытку.");
+
+                return result;
             }
 
-            // вывод массива в консоль:
-            void PrintArray(int[,] array)
+            // вывод суммы чисел от М до N:
+            int OutputOfTheSumOfNumbers(int m, int n)
             {
-                for (int i = 0; i < array.GetLength(0); i++)
-                {
-                    for (int j = 0; j < array.GetLength(1); j++)
-                    {
-                        Console.Write("{0, 3}", array[i, j]);
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
+                if (m == 0) return (n * (n + 1)) / 2;            
+                else if (n == 0) return (n * (m + 1)) / 2;       
+                else if (m == n) return m;                       
+                else if (m < n) return n + OutputOfTheSumOfNumbers(m, n - 1); 
+                else return n + OutputOfTheSumOfNumbers(m, n + 1);
             }
 
-            // находим строку с наименьшей суммой элементов:
-            int FindRowWithSmallestSumOfElements(int[,] array)
-            {
-                int index = 0;
-                int minSum = 0;
-                for (int i = 0; i < array.GetLength(0); i++)
-                {
-                    int sum = 0;
-                    for (int j = 0; j < array.GetLength(1); j++)
-                    {
-                        sum += array[i, j];
-                    }
-                    Console.WriteLine($"{i + 1}ая строка = {sum}");
-                    
-                    if (i == 0)
-                    {
-                        minSum = sum;
-                    }
-                    else if (sum < minSum)
-                    {
-                        minSum = sum;
-                        index = i;
-                    }
-                }
-                return index;
-            }
+            int m = EnteringValues("Введите значение M: ");
+            int n = EnteringValues("Введите значение N: ");
+            Console.WriteLine($"Сумма чисел промежутка = {OutputOfTheSumOfNumbers(m, n)}");
 
-            int[,] rectangularArray = SettingRectangularTwoDimensionalArray();
-            Console.WriteLine("Прямоугольный двумерный массив:");
-            PrintArray(rectangularArray);
-
-            int index = FindRowWithSmallestSumOfElements(rectangularArray);
-            Console.WriteLine($"\n{index + 1}ая строка с минимальной суммой эл-ов. \n");
-
-            Console.WriteLine("ПРОГРАММА 2 ЗАВЕРШЕНА\n");
+            Console.WriteLine("\nПРОГРАММА 2 ЗАВЕРШЕНА\n");
             break;
 
         case 3:
