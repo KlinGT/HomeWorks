@@ -93,9 +93,9 @@ while (begin)
                 else return n + OutputOfTheSumOfNumbers(m, n + 1);
             }
 
-            int m = EnteringValues("Введите значение M: ");
-            int n = EnteringValues("Введите значение N: ");
-            Console.WriteLine($"Сумма чисел промежутка = {OutputOfTheSumOfNumbers(m, n)}");
+            int numM = EnteringValues("Введите значение M: ");
+            int numN = EnteringValues("Введите значение N: ");
+            Console.WriteLine($"Сумма чисел промежутка = {OutputOfTheSumOfNumbers(numM, numN)}");
 
             Console.WriteLine("\nПРОГРАММА 2 ЗАВЕРШЕНА\n");
             break;
@@ -135,9 +135,9 @@ while (begin)
                 else return (AckermanFunctions(m - 1, AckermanFunctions(m, n - 1)));
             }
 
-            int m = EnteringTwoValues("Введите значение M: ");
-            int n = EnteringTwoValues("Введите значение N: ");
-            Console.WriteLine($"A(m,n) = {AckermanFunctions(m, n)}");
+            int valM = EnteringTwoValues("Введите, желательно 2 или 3: ");
+            int valN = EnteringTwoValues("Введите... и ещё разок: ");
+            Console.WriteLine($"A(m,n) = {AckermanFunctions(valM, valN)}");
 
             Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
             break;
