@@ -1,16 +1,15 @@
 ﻿/* Домашняя работа по 7ой лекции; Расторгуева ВТ; группа 3235;
 ---------------------------------------------------------------
-Задача 66: Задайте значения M и N. Напишите программу, которая найдёт сумму 
-натуральных элементов в промежутке от M до N. Выполнить с помощью рекурсии.
-M = 1; N = 15 -> 120
-M = 4; N = 8. -> 30
+Задача 68: Напишите программу вычисления функции Аккермана 
+с помощью рекурсии. Даны два неотрицательных числа m и n.
+m = 2, n = 3 -> A(m,n) = 9
+m = 3, n = 2 -> A(m,n) = 29
 */            
-
 Console.Clear();
-Console.WriteLine("ПРОГРАММА 2 ЗАПУЩЕНА\n");
+Console.WriteLine("ПРОГРАММА 3 ЗАПУЩЕНА\n");
 
 // ввод значения M и N с консоли:
-int EnteringValues(string msg)
+int EnteringTwoValues(string msg)
 {
     Console.Write(msg);
 
@@ -26,18 +25,16 @@ int EnteringValues(string msg)
     return result;
 }
 
-// вывод суммы чисел от М до N:
-int OutputOfTheSumOfNumbers(int m, int n)
+// вывод функции Аккермана:
+int AckermanFunctions(int m, int n)
 {
-    if (m == 0) return (n * (n + 1)) / 2;            
-    else if (n == 0) return (n * (m + 1)) / 2;       
-    else if (m == n) return m;                       
-    else if (m < n) return n + OutputOfTheSumOfNumbers(m, n - 1); 
-    else return n + OutputOfTheSumOfNumbers(m, n + 1);
+    if (m == 0) return n + 1;
+    else if (n == 0 && m > 0) return AckermanFunctions(m - 1, 1);
+    else return (AckermanFunctions(m - 1, AckermanFunctions(m, n - 1)));
 }
 
-int m = EnteringValues("Введите значение M: ");
-int n = EnteringValues("Введите значение N: ");
-Console.WriteLine($"Сумма чисел промежутка = {OutputOfTheSumOfNumbers(m, n)}");
+int m = EnteringTwoValues("Введите значение M: ");
+int n = EnteringTwoValues("Введите значение N: ");
+Console.WriteLine($"A(m,n) = {AckermanFunctions(m, n)}");
 
-Console.WriteLine("\nПРОГРАММА 2 ЗАВЕРШЕНА\n");
+Console.WriteLine("\nПРОГРАММА 3 ЗАВЕРШЕНА\n");
