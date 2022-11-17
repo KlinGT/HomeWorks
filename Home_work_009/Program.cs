@@ -1,16 +1,15 @@
 ﻿/* Домашняя работа по 7ой лекции; Расторгуева ВТ; группа 3235;
 ---------------------------------------------------------------
-Задача 23: Напишите программу, которая принимает на вход число (N) 
-и выдаёт таблицу кубов чисел от 1 до N.
-3 -> 1, 8, 27
-5 -> 1, 8, 27, 64, 125
+Задача 64: Задайте значение N. Напишите программу, которая выведет 
+все натуральные числа в промежутке от N до 1. Выполнить с помощью рекурсии.
+N = 5 -> "5, 4, 3, 2, 1"
+N = 8 -> "8, 7, 6, 5, 4, 3, 2, 1"
 */            
-
 Console.Clear();
 Console.WriteLine("ПРОГРАММА 1 ЗАПУЩЕНА\n");
 
-// ввод значения M и N с консоли:
-int EnteringValues(string msg)
+// ввод значения N с консоли:
+int EnteringValue(string msg)
 {
     Console.Write(msg);
 
@@ -26,18 +25,14 @@ int EnteringValues(string msg)
     return result;
 }
 
-// вывод суммы чисел от М до N:
-int OutputOfTheSumOfNumbers(int m, int n)
+// вывод чисел от N до 1 при помощи рекурсии:
+string EnteringGapNumbers(int a, int n)
 {
-    if (m == 0) return (n * (n + 1)) / 2;            
-    else if (n == 0) return (n * (m + 1)) / 2;       
-    else if (m == n) return m;                       
-    else if (m < n) return n + OutputOfTheSumOfNumbers(m, n - 1); 
-    else return n + OutputOfTheSumOfNumbers(m, n + 1);
+    if (a <= n) return EnteringGapNumbers(a + 1, n) + $"{a}, ";
+    else return String.Empty;
 }
 
-int m = EnteringValues("Введите значение M: ");
-int n = EnteringValues("Введите значение N: ");
-Console.WriteLine($"Сумма чисел промежутка = {OutputOfTheSumOfNumbers(m, n)}");
+int n = EnteringValue("Введите значение N числом: ");
+Console.WriteLine($"N = {n} -> {EnteringGapNumbers(1, n)}");
 
 Console.WriteLine("\nПРОГРАММА 1 ЗАВЕРШЕНА\n");
