@@ -7,7 +7,7 @@ while (begin)
 {
     Console.WriteLine();
     Console.WriteLine("Введите номер интересующей вас программы:");
-    Console.WriteLine("1 - Программа создаёт двумерный массив и упорядочит по убыванию элементы каждой строки двумерного массива.");
+    Console.WriteLine("1 - Программа задаёт значение N и выводит все натуральные числа в промежутке от N до 1.");
     Console.WriteLine("2 - Программа задаёт прямоугольный двумерный массив и находит строку с наименьшей суммой элементов.");
     Console.WriteLine("3 - Программа задаёт две матрицы и находит произведение двух матриц.");
     Console.WriteLine("4 - Если хотите покинуть программу.");
@@ -18,91 +18,42 @@ while (begin)
     {
         case 1:
             /*                                              ///Ветка Task_1.
-            Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит 
-            по убыванию элементы каждой строки двумерного массива.
-            Например, задан массив:
-            1 4 7 2
-            5 9 2 3
-            8 4 2 4
-            В итоге получается вот такой массив:
-            7 4 2 1
-            9 5 3 2
-            8 4 4 2
-            */
+            Задача 64: Задайте значение N. Напишите программу, которая выведет 
+            все натуральные числа в промежутке от N до 1. Выполнить с помощью рекурсии.
+            N = 5 -> "5, 4, 3, 2, 1"
+            N = 8 -> "8, 7, 6, 5, 4, 3, 2, 1"
+            */            
             Console.Clear();
             Console.WriteLine("ПРОГРАММА 1 ЗАПУЩЕНА\n");
 
-            // запрос на размерность массива:
-            int RequestForDimensionOfArray(string msg)
+            // ввод значения N с консоли:
+            int EnteringValue(string msg)
             {
                 Console.Write(msg);
-                int res = int.Parse(Console.ReadLine() ?? "");
-                return res;
+
+                bool isCorrect = false;
+                int result = 0;
+
+                while (!isCorrect)
+                    if (int.TryParse(Console.ReadLine(), out result))
+                        isCorrect = true;
+                    else
+                        Console.WriteLine("Не корректный ввод. Повторите попытку.");
+
+                return result;
             }
 
-            // создаём массив случайных чисел:
-            int[,] CreatingArrayOfRandomoriginArray(int rows, int columns)
+            // вывод чисел от N до 1 при помощи рекурсии:
+            string EnteringGapNumbers(int a, int n)
             {
-                int[,] array = new int[rows, columns];
-                Random rnd = new Random();
-
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        array[i, j] = rnd.Next(1, 10);
-                    }
-                }
-                return array;
+                if (a <= n) return EnteringGapNumbers(a + 1, n) + $"{a}, ";
+                else return String.Empty;
             }
 
-            // вывод массива в консоль:
-            void PrintArrayInToConsole(int[,] array)
-            {
-                for (int i = 0; i < array.GetLength(0); i++)
-                {
-                    for (int j = 0; j < array.GetLength(1); j++)
-                    {
-                        Console.Write("{0, 3}", array[i, j]);
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
-            }
+            int n = EnteringValue("Введите значение N числом: ");
+            Console.WriteLine($"N = {n} -> {EnteringGapNumbers(1, n)}");
 
-            // упорядочит по убыванию элементы каждой строки:
-            int[,] ArrangeElementsOfEachRowInDescendingOrder(int[,] originArray)
-            {
-                for (int i = 0; i < originArray.GetLength(0); i++)
-                {
-                    for (int j = 0; j < originArray.GetLength(1) - 1; j++)
-                    {
-                        for (int m = 0; m < originArray.GetLength(1) - 1; m++)
-                        {
-                            if (originArray[i, m] < originArray[i, m + 1])
-                            {
-                                int temp = 0;
-                                temp = originArray[i, m];
-                                originArray[i, m] = originArray[i, m + 1];
-                                originArray[i, m + 1] = temp;
-                            }
-                        }
-                    }
-                }
-                return originArray;
-            }
-
-            int rows = RequestForDimensionOfArray("Введите кол-во строк: ");
-            int columns = RequestForDimensionOfArray("Введите кол-во столбцов: ");
-            Console.WriteLine();
-
-            int[,] originArray = CreatingArrayOfRandomoriginArray(rows, columns);
-            PrintArrayInToConsole(originArray);
-
-            int[,] sortedArray = ArrangeElementsOfEachRowInDescendingOrder(originArray);
-            PrintArrayInToConsole(sortedArray);
-
-            Console.WriteLine("ПРОГРАММА 1 ЗАВЕРШЕНА\n");
+            Console.WriteLine("\nПРОГРАММА 1 ЗАВЕРШЕНА\n");
             break;
 
         case 2:
